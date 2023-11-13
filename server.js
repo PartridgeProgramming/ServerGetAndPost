@@ -69,6 +69,7 @@ let rockets = [{
         successful_launches: 0,
         launch_sites: ["Boca Chica, Texas"]
 }];
+
 app.get("/api/rockets", (req, res) => {
     res.send(rockets);
 }); 
@@ -88,7 +89,7 @@ app.post("/api/rockets", upload.single("img"), (req, res) => {
         payload_capacity_kg: req.body.payload_capacity_kg,
         propellant_type: req.body.propellant_type,
         successful_launches: req.body.successful_launches,
-        launch_sites: req.body.launch_sites.split(",")
+        launch_sites: req.body.launch_sites.split(".")
     }
 
     rockets.push(rocket);
@@ -98,8 +99,8 @@ app.post("/api/rockets", upload.single("img"), (req, res) => {
 const validateRocket = (rocket) => {
     const schema = Joi.object({
         _id: Joi.allow(""),
-        name: Joi.string().min(5).required(),
-        company: Joi.string().min(3).required(),
+        name: Joi.string().min(3).required(),
+        company: Joi.string().min(5).required(),
         payload_capacity_kg: Joi.number().positive().required(),
         propellant_type: Joi.string().min(3).required(),
         successful_launches: Joi.number().required(),
