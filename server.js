@@ -98,7 +98,7 @@ app.post("/api/rockets", upload.single("img"), (req, res) => {
 
 const validateRocket = (rocket) => {
     const schema = Joi.object({
-        _id: Joi.allow(""),
+        _id: Joi.number().allow(''), // Assuming _id is a string
         name: Joi.string().min(3).required(),
         company: Joi.string().min(5).required(),
         payload_capacity_kg: Joi.number().positive().required(),
@@ -108,7 +108,8 @@ const validateRocket = (rocket) => {
     });
 
     return schema.validate(rocket);
-}
+};
+
 
 app.listen(3000, () => {
     console.log("Server started.")
