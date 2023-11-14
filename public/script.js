@@ -108,7 +108,7 @@ const addEditRocket = async (e) => {
     }
     catch (error) {
         const errorMessage = document.getElementById("error-message");
-        errorMessage.innerHTML = error;
+        errorMessage.innerHTML = "There was an error with submission.";
         console.log(error);
     }
 };
