@@ -85,25 +85,32 @@ const addEditRocket = async (e) => {
     const formData = new FormData(form);
     let response;
 
-    // Checking if it's a new rocket (based on _id)
-    if (form._id.value === "-1") {
-        formData.delete("_id");
-        formData.delete("img");
+    try {
+        // Checking if it's a new rocket (based on _id)
+        if (form._id.value === "-1") {
+            formData.delete("_id");
+            formData.delete("img");
 
-        const sites = getSites().join("."); // Join the sites with a period
-        formData.set("launch_sites", sites); // Set the launch_sites field with the joined sites
+            const sites = getSites().join("."); // Join the sites with a period
+            formData.set("launch_sites", sites); // Set the launch_sites field with the joined sites
 
-        console.log(...formData);
-        
-        response = await fetch("/api/rockets", {
-            method: "POST",
-            body: formData
-        });
+            console.log(...formData);
+            
+            response = await fetch("/api/rockets", {
+                method: "POST",
+                body: formData
+            });
 
-        response = await response.json();
+            response = await response.json();
+            }
+
+            showRockets();
     }
-
-    showRockets();
+    catch (error) {
+        const errorMessage = document.getElementById("error-message");
+        errorMessage.innerHTML = error;
+        console.log(error);
+    }
 };
 
 const getSites = () => {

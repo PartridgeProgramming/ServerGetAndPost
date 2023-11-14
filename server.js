@@ -20,7 +20,7 @@ let rockets = [{
         payload_capacity_kg: 63800,
         propellant_type: "liquid",
         successful_launches: 4,
-        launch_sites: ["Kennedy Space Center", 
+        launch_sites: ["Kennedy Space Center",
         "Vandenberg Space Force Base"],
     },
     {
@@ -30,11 +30,11 @@ let rockets = [{
         payload_capacity_kg: 20600,
         propellant_type: "liquid",
         successful_launches: 86,
-        launch_sites: ["Cape Canaveral Space Force Station", 
+        launch_sites: ["Cape Canaveral Space Force Station",
         "Vandenberg Space Force Base"]
     },
     {
-        _id: 3, 
+        _id: 3,
         name: "Delta IV Heavy",
         company: "United Launch Alliance",
         payload_capacity_kg: 28800,
@@ -72,9 +72,10 @@ let rockets = [{
 
 app.get("/api/rockets", (req, res) => {
     res.send(rockets);
-}); 
+});
 
 app.post("/api/rockets", upload.single("img"), (req, res) => {
+	console.log(req.body);
     const result = validateRocket(req.body);
 
     if (result.error) {
@@ -98,7 +99,7 @@ app.post("/api/rockets", upload.single("img"), (req, res) => {
 
 const validateRocket = (rocket) => {
     const schema = Joi.object({
-        _id: Joi.number().allow(''), // Assuming _id is a string
+        _id: Joi.number().allow(''),
         name: Joi.string().min(3).required(),
         company: Joi.string().min(5).required(),
         payload_capacity_kg: Joi.number().positive().required(),
